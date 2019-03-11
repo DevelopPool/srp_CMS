@@ -1,25 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import BadGateway from '@/views/BadGateway.vue';
-import Dashboard from '@/views/Dashboard.vue';
-import ExpressDaily from '@/views/ExpressDaily.vue';
+import ExpressDaily from '@/views/Attendance.vue';
 
 Vue.use(Router);
 
 export default new Router({
 	routes: [
 		{
-			path: '/dashboard',
-			name: 'Dashboard',
-			component: Dashboard,
-			props: { page: 1 },
-			alias: '/',
-		},
-		{
-			path: '/expressdaily',
-			name: 'ExpressDaily',
+			path: '/attendance',
+			name: 'Attendance',
 			component: ExpressDaily,
-			props: { page: 2 },
+			props: { page: 1 },
 		},
 		{
 			path: '/404',

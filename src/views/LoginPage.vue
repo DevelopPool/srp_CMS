@@ -4,7 +4,7 @@
 			<v-flex md4 sm8 xs12>
 				<v-card class="elevation-12">
 					<v-toolbar color="primary" dark>
-						<v-toolbar-title class="ma-auto">門口送豆漿管理系統</v-toolbar-title>
+						<v-toolbar-title class="ma-auto">司馬庫斯管理系統</v-toolbar-title>
 					</v-toolbar>
 					<v-card-text>
 						<v-form>
