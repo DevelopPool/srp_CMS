@@ -13,11 +13,11 @@ module.exports = {
 		// allow debugger during development
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 		'no-var': "error",
-		'indent': [
-			'error',
-			'tab',
-			{ 'SwitchCase': 0 },
-		],
+		// 'indent': [
+		// 	'error',
+		// 	'tab',
+		// 	{ 'SwitchCase': 0 },
+		// ],
 		'linebreak-style': [
 			'error',
 			'unix'

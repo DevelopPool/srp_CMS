@@ -11,11 +11,7 @@
 			</v-toolbar-items>
 		</v-toolbar>
 		<v-container>
-			<v-layout>
-				<v-flex>
-					<router-view></router-view>
-				</v-flex>
-			</v-layout>
+			<router-view></router-view>
 		</v-container>
 		<v-footer dark height="auto">
 			<v-card class="flex" flat tile>
