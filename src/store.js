@@ -1,7 +1,20 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 Vue.use(Vuex);
+
+// Initialize Firebase
+const config = {
+	apiKey: 'AIzaSyDiWvzSG8kFr2oPLyrLleEmxGxMY3ed5Hw',
+	authDomain: 'my-fuck-awesome-project.firebaseapp.com',
+	databaseURL: 'https://my-fuck-awesome-project.firebaseio.com',
+	projectId: 'my-fuck-awesome-project',
+	storageBucket: 'my-fuck-awesome-project.appspot.com',
+	messagingSenderId: '885320638463',
+};
+firebase.initializeApp(config);
 
 export default new Vuex.Store({
 	state: {
@@ -17,27 +30,10 @@ export default new Vuex.Store({
 			state.token = token;
 			localStorage.setItem('user_token', token);
 		},
-		pushCustomerData(state, customerData) {
-			state.customerData = customerData;
-		},
-		addCustomerIdPhone(state, customerData) {
-			customerData.forEach(item => {
-				let phoneArray = item.contact.filter(contact => contact.type === 'phone');
-				phoneArray = phoneArray.map(phoneItem => phoneItem.value);
-
-				phoneArray.forEach(val => {
-					state.phoneIdChart[val] = item.id;
-				});
-			});
-		},
 	},
 	actions: {
 		autoLogin({ commit }, token) {
 			commit('changeLoginStatus', token);
-		},
-		asyncCustomerData({ commit }, customerData) {
-			commit('pushCustomerData', customerData);
-			commit('addCustomerIdPhone', customerData);
 		},
 	},
 });
