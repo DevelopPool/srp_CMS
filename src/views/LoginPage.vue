@@ -15,23 +15,22 @@
 								type="text"
 								v-model="phoneNo"
 							></v-text-field>
-							<v-btn @click="sendOtp" color="primary">Send Otp</v-btn>
-							<div id="recaptcha-container"></div>
-							<v-text-field
-								id="password"
-								label="驗證碼"
-								name="password"
-								prepend-icon="lock"
-								type="text"
-								v-model="otp"
-							></v-text-field>
+							<div class="text-xs-center" v-if="!loginBtnShow">
+								<v-btn @click="sendOtp" color="primary" id="recaptcha-container">發送登入驗證碼</v-btn>
+							</div>
+							<div class="text-xs-center" v-if="loginBtnShow">
+								<v-text-field
+									id="password"
+									label="驗證碼"
+									name="password"
+									prepend-icon="lock"
+									type="text"
+									v-model="otp"
+								></v-text-field>
+								<v-btn @click="verifyOtp" color="primary">輸入驗證碼登入系統</v-btn>
+							</div>
 						</v-form>
 					</v-card-text>
-					<v-card-actions>
-						<v-spacer></v-spacer>
-						<v-btn @click="verifyOtp" color="primary">Login</v-btn>
-						<v-btn @click="singOut">登出</v-btn>
-					</v-card-actions>
 				</v-card>
 			</v-flex>
 		</v-layout>
@@ -48,11 +47,10 @@ export default {
 	name: 'LoginPage',
 	data() {
 		return {
-			userAccount: '',
-			userPassword: '',
 			phoneNo: '',
 			appVerifier: '',
 			otp: '',
+			loginBtnShow: false,
 		};
 	},
 	components: {},
@@ -66,21 +64,20 @@ export default {
 		sendOtp() {
 			let countryCode = '+886'; //india
 			let phoneNumber = countryCode + this.phoneNo.substring(1);
-			console.log(phoneNumber);
 			firebase
 				.auth()
 				.signInWithPhoneNumber(phoneNumber, this.appVerifier)
-				.then(function(confirmationResult) {
+				.then(confirmationResult => {
 					// SMS sent. Prompt user to type the code from the message, then sign the
 					// user in with confirmationResult.confirm(code).
 					window.confirmationResult = confirmationResult;
-					//
-					alert('SMS sent');
+					this.loginBtnShow = true;
 				})
 				.catch(function(error) {
 					// Error; SMS not sent
 					// ...
-					alert('Error ! SMS not sent');
+					console.warn('Error ! SMS not sent');
+					console.error(error);
 				});
 		},
 		//
@@ -94,8 +91,8 @@ export default {
 					.confirm(this.otp)
 					.then(result => {
 						let uid = result.user.uid;
-						localStorage.setItem('uid', uid);
 						this.$store.dispatch('autoLogin', uid);
+						this.$router.push('/attendance');
 					})
 					.catch(function(error) {
 						firebase

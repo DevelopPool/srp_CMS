@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import 'font-awesome/css/font-awesome.min.css';
 
-window.API = 'https://us-central1-deliwater.cloudfunctions.net/';
+window.API = 'https://us-central1-my-fuck-awesome-project.cloudfunctions.net';
 window.axios = axios;
 
 Vue.config.productionTip = false;

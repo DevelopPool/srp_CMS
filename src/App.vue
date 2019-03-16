@@ -1,30 +1,40 @@
 <template>
 	<v-app overflow-hidden>
-		<component :is="componentName" class="overflow-hidden"></component>
+		<v-layout column style="height:100vh">
+			<v-toolbar color="grey darken-1" dark>
+				<!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
+				<v-toolbar-title>司馬庫斯管理系統</v-toolbar-title>
+				<v-spacer></v-spacer>
+				<v-toolbar-items class="d-flex flex xs7">
+					<v-btn @click.native="activeItem = 2" append flat to="/bulletin">公告系統</v-btn>
+					<v-btn @click.native="activeItem = 2" append flat to="/attendance">出勤紀錄</v-btn>
+					<v-btn @click.native="activeItem = 3" append flat to="/personnel">人員資料</v-btn>
+				</v-toolbar-items>
+			</v-toolbar>
+			<v-container>
+				<router-view></router-view>
+			</v-container>
+			<v-footer dark height="auto">
+				<v-card class="flex" flat tile>
+					<v-card-actions class="grey darken-3 justify-center">
+						<span>&copy; {{ new Date().getFullYear() }} Copyright: 司馬庫斯管理系統</span>
+					</v-card-actions>
+				</v-card>
+			</v-footer>
+		</v-layout>
 	</v-app>
 </template>
 
 <script>
-import MainPage from './views/MainPage';
-import LoginPage from './views/LoginPage';
-
 export default {
 	name: 'Admin',
-	components: { MainPage, LoginPage },
 	data() {
 		return {
-			// componentName: 'LoginPage',
+			activeItem: 1,
 		};
 	},
-	computed: {
-		componentName() {
-			return this.$store.state.loginStatus ? 'MainPage' : 'LoginPage';
-		},
-	},
-	created() {
-		if (localStorage.getItem('user_token')) {
-			this.$store.dispatch('autoLogin', localStorage.getItem('user_token'));
-		}
+	beforeMount() {
+		this.activeItem = this.$route.matched[0].props.default.page;
 	},
 };
 </script>
