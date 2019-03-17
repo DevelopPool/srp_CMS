@@ -18,7 +18,7 @@ firebase.initializeApp(config);
 
 export default new Vuex.Store({
 	state: {
-		uid: '',
+		uid: 'Xa9qSXTuOzZjpynAYHVt46MRYlQ2',
 		scheduleToday: [],
 		customerData: [],
 		phoneIdChart: {},

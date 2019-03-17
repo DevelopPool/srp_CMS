@@ -8,7 +8,7 @@
 				<v-toolbar-items class="d-flex flex xs7">
 					<v-btn @click.native="activeItem = 1" append flat to="/notice">公告系統</v-btn>
 					<v-btn @click.native="activeItem = 2" append flat to="/attendance">出勤紀錄</v-btn>
-					<v-btn @click.native="activeItem = 3" append flat to="/personnel">人員資料</v-btn>
+					<!-- <v-btn @click.native="activeItem = 3" append flat to="/personnel">人員資料</v-btn> -->
 				</v-toolbar-items>
 			</v-toolbar>
 			<v-container>

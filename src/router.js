@@ -18,11 +18,17 @@ export default new Router({
 			component: LoginPage,
 		},
 		{
+			path: '/',
+			name: 'root',
+			component: Notice,
+			props: { page: 0 },
+			beforeEnter: AuthGuard,
+		},
+		{
 			path: '/notice',
 			name: 'Notice',
 			component: Notice,
 			props: { page: 1 },
-			alias: '/',
 			beforeEnter: AuthGuard,
 		},
 		{
