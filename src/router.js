@@ -57,18 +57,10 @@ function AuthGuard(to, from, next) {
 				if (res.data.excutionResult === 'success') {
 					next();
 				} else {
-					console.log(store.state.uid);
-					store.commit('userLogin', '');
-					console.log(store.state.uid);
-					next('/login');
-					// location.reload();
+					location.reload();
 				}
 			})
 			.catch(e => console.error(e));
-		// fetch('https://us-central1-my-fuck-awesome-project.cloudfunctions.net/getLeaveNoteList', {
-		// 	method: 'POST', // *GET, POST, PUT, DELETE, etc.
-		// 	mode: 'cors', // no-cors, cors, *same-origin
-		// }).then(response => response.json());
 	} else {
 		next('/login');
 	}

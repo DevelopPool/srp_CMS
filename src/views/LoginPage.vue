@@ -55,12 +55,6 @@ export default {
 	},
 	components: {},
 	methods: {
-		sendLoginInfo() {
-			// console.log(this.userAccount, this.userPassword);
-			// 驗證帳號密碼正確並回傳 Token 後執行：
-			this.$store.dispatch('autoLogin', this.userPassword);
-		},
-
 		sendOtp() {
 			let countryCode = '+886'; //india
 			let phoneNumber = countryCode + this.phoneNo.substring(1);
@@ -91,10 +85,9 @@ export default {
 					.confirm(this.otp)
 					.then(result => {
 						let uid = result.user.uid;
-						console.log(uid);
 						this.$store.commit('userLogin', uid);
 						console.log('store.uid: ', this.$store.state.uid);
-						this.$router.push('/attendance');
+						this.$router.push('/notice');
 					})
 					.catch(function(error) {
 						firebase
@@ -111,6 +104,20 @@ export default {
 				.then(res => console.warn(res));
 		},
 		initReCaptcha() {
+			if (this.$store.state.uid) {
+				const url = API + '/checkLogin';
+				const postBody = { uid: this.$store.state.uid };
+				axios
+					.post(url, postBody)
+					.then(res => {
+						if (res.data.excutionResult === 'success') {
+							this.$router.push('/');
+						} else {
+							this.$store.commit('userLogin', '');
+						}
+					})
+					.catch(e => console.error(e));
+			}
 			setTimeout(() => {
 				let vm = this;
 				window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
