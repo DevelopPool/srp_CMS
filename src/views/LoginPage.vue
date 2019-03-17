@@ -79,15 +79,28 @@ export default {
 			if (this.otp.length != 6) {
 				alert('Invalid Phone Number/OTP Format !');
 			} else {
-				// let code = this.otp;
-				//
 				window.confirmationResult
 					.confirm(this.otp)
 					.then(result => {
 						let uid = result.user.uid;
 						this.$store.commit('userLogin', uid);
 						console.log('store.uid: ', this.$store.state.uid);
-						this.$router.push('/notice');
+						return uid;
+						// this.$router.push('/notice');
+					})
+					.then(uid => {
+						const url = API + '/checkLogin';
+						const postBody = { uid };
+						axios
+							.post(url, postBody)
+							.then(res => {
+								if (res.data.excutionResult === 'success') {
+									this.$router.push('/');
+								} else {
+									location.reload();
+								}
+							})
+							.catch(e => console.error(e));
 					})
 					.catch(function(error) {
 						firebase
@@ -105,7 +118,7 @@ export default {
 		},
 		initReCaptcha() {
 			if (this.$store.state.uid) {
-				const url = API + '/checkLogin';
+				const url = API + '/getUserDetail';
 				const postBody = { uid: this.$store.state.uid };
 				axios
 					.post(url, postBody)

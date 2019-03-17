@@ -48,12 +48,11 @@ export default new Router({
 
 function AuthGuard(to, from, next) {
 	if (store.state.uid) {
-		const url = API + '/checkLogin';
+		const url = API + '/getUserDetail';
 		const postBody = { uid: store.state.uid };
 		axios
 			.post(url, postBody)
 			.then(res => {
-				console.log(res);
 				if (res.data.excutionResult === 'success') {
 					next();
 				} else {
