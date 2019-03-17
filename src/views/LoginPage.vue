@@ -91,16 +91,14 @@ export default {
 					.then(uid => {
 						const url = API + '/checkLogin';
 						const postBody = { uid };
-						axios
-							.post(url, postBody)
-							.then(res => {
-								if (res.data.excutionResult === 'success') {
-									this.$router.push('/');
-								} else {
-									location.reload();
-								}
-							})
-							.catch(e => console.error(e));
+						return axios.post(url, postBody);
+					})
+					.then(res => {
+						if (res.data.excutionResult === 'success') {
+							this.$router.push('/');
+						} else {
+							location.reload();
+						}
 					})
 					.catch(function(error) {
 						firebase
