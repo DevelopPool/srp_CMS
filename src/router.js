@@ -2,36 +2,45 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store.js';
 import BadGateway from '@/views/BadGateway.vue';
-import ExpressDaily from '@/views/Attendance.vue';
+import Attendance from '@/views/Attendance.vue';
 import LoginPage from '@/views/LoginPage.vue';
-import Axios from 'axios';
+import Notice from '@/views/Notice.vue';
 
 Vue.use(Router);
 
 export default new Router({
+	mode: 'history',
 	routes: [
 		{
-			path: '/login-page',
+			path: '/login',
 			name: 'LoginPage',
 			props: { page: 0 },
 			component: LoginPage,
 		},
 		{
+			path: '/notice',
+			name: 'Notice',
+			component: Notice,
+			props: { page: 1 },
+			alias: '/',
+			beforeEnter: AuthGuard,
+		},
+		{
 			path: '/attendance',
 			name: 'Attendance',
-			component: ExpressDaily,
-			props: { page: 1 },
+			component: Attendance,
+			props: { page: 2 },
 			beforeEnter: AuthGuard,
 		},
 		{
 			path: '/404',
 			name: 'BadGateway',
-			props: { page: 5 },
+			props: { page: 50 },
 			component: BadGateway,
 		},
 		{
 			path: '*',
-			props: { page: 5 },
+			props: { page: 50 },
 			redirect: '/404',
 		},
 	],
@@ -48,11 +57,19 @@ function AuthGuard(to, from, next) {
 				if (res.data.excutionResult === 'success') {
 					next();
 				} else {
-					next('/login-page');
+					console.log(store.state.uid);
+					store.commit('userLogin', '');
+					console.log(store.state.uid);
+					next('/login');
+					// location.reload();
 				}
 			})
 			.catch(e => console.error(e));
+		// fetch('https://us-central1-my-fuck-awesome-project.cloudfunctions.net/getLeaveNoteList', {
+		// 	method: 'POST', // *GET, POST, PUT, DELETE, etc.
+		// 	mode: 'cors', // no-cors, cors, *same-origin
+		// }).then(response => response.json());
 	} else {
-		next('/login-page');
+		next('/login');
 	}
 }

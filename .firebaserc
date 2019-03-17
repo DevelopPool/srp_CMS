@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "my-fuck-awesome-project"
+  },
+  "targets": {
+    "my-fuck-awesome-project": {
+      "hosting": {
+        "admin": [
+          "srp-admin"
+        ]
+      }
+    }
+  }
+}

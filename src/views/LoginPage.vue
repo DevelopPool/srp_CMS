@@ -7,9 +7,9 @@
 						<v-toolbar-title class="ma-auto">司馬庫斯管理系統</v-toolbar-title>
 					</v-toolbar>
 					<v-card-text>
-						<v-form>
+						<v-form @submit.native.prevent>
 							<v-text-field
-								label="帳號"
+								label="電話驗證"
 								name="login"
 								prepend-icon="person"
 								type="text"
@@ -91,7 +91,9 @@ export default {
 					.confirm(this.otp)
 					.then(result => {
 						let uid = result.user.uid;
-						this.$store.dispatch('autoLogin', uid);
+						console.log(uid);
+						this.$store.commit('userLogin', uid);
+						console.log('store.uid: ', this.$store.state.uid);
 						this.$router.push('/attendance');
 					})
 					.catch(function(error) {

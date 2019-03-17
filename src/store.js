@@ -18,19 +18,16 @@ firebase.initializeApp(config);
 
 export default new Vuex.Store({
 	state: {
-		uid: '',
+		uid: 'hahaha',
 		scheduleToday: [],
 		customerData: [],
 		phoneIdChart: {},
 	},
 	mutations: {
-		changeLoginStatus(state, uid) {
+		userLogin(state, uid) {
 			state.uid = uid;
+			console.log('store: ', state.uid);
 		},
 	},
-	actions: {
-		autoLogin({ commit }, token) {
-			commit('changeLoginStatus', token);
-		},
-	},
+	actions: {},
 });
